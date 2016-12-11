@@ -1,5 +1,5 @@
-SCREEN_WIDTH = 1600;
-SCREEN_HEIGHT = 900;
+SCREEN_WIDTH = 1000;
+SCREEN_HEIGHT = 750;
 
 class Line {
 	constructor(start, end) {
@@ -95,7 +95,7 @@ function generate(steps) {
     }
 
     if (frontier.length === 0)
-        console.log("failed");
+        generate(steps);
 }
 
 function gen() {
@@ -108,7 +108,7 @@ function gen() {
 		objects = [];
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
 		ctx.beginPath();
-		
+
 		generate(2000);
 
 		for (i = 0; i < objects.length; i++) {
@@ -123,7 +123,7 @@ gen();
 document.onkeydown = (e) => {
 	e = e || window.event;
 
-    if (e.keyCode == '32') {
+    if (e.keyCode == '13') {
     	// space bar
         gen();
     }
