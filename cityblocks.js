@@ -94,8 +94,6 @@ function generate(steps) {
     	}
     }
 
-    console.log(j);
-
     if (frontier.length === 0)
         console.log("failed");
 }
