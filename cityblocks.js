@@ -98,19 +98,33 @@ function generate(steps) {
         console.log("failed");
 }
 
-let canvas = document.getElementById('cityBlocks');
-var ctx = "";
-if (canvas.getContext) {
-	var ctx = canvas.getContext('2d');
-	ctx.lineWidth = 2;
+function gen() {
+	let canvas = document.getElementById('cityBlocks');
+	var ctx = "";
+	if (canvas.getContext) {
+		var ctx = canvas.getContext('2d');
+		ctx.lineWidth = 2;
+
+		objects = [];
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+		ctx.beginPath();
+		
+		generate(2000);
+
+		for (i = 0; i < objects.length; i++) {
+			objects[i].draw(ctx);
+		}
+		ctx.stroke();
+	}
 }
 
-generate(2000);
+gen();
 
-let beforeDraw = performance.now();
-console.log(beforeDraw);
-for (i = 0; i < objects.length; i++) {
-	objects[i].draw(ctx);
+document.onkeydown = (e) => {
+	e = e || window.event;
+
+    if (e.keyCode == '32') {
+    	// space bar
+        gen();
+    }
 }
-ctx.stroke();
-console.log(performance.now() - beforeDraw);
