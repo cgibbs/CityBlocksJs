@@ -119,12 +119,3 @@ function gen() {
 }
 
 gen();
-
-document.onkeydown = (e) => {
-	e = e || window.event;
-
-    if (e.keyCode == '13') {
-    	// space bar
-        gen();
-    }
-}
