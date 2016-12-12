@@ -82,7 +82,7 @@ function pick_branches(node) {
 }
 
 function generate(steps) {
-    let n = new GenNode([SCREEN_WIDTH/2, SCREEN_HEIGHT/2], ['n', 's', 'e', 'w'])
+    let n = new GenNode([SCREEN_WIDTH/2 - (SCREEN_WIDTH/2) % 10, SCREEN_HEIGHT/2 - (SCREEN_HEIGHT/2) % 10], ['n', 's', 'e', 'w'])
     frontier.push(n);
 
     let j = 0
