@@ -58,7 +58,11 @@ function branchesToLines(node) {
     	while (end[1] < 0) end[1] += 100;
 		while (end[1] > SCREEN_HEIGHT) end[1] -= 100;
 		if (getRandomInt(0,4) === 3) { // weights toward center of the screen for picking nodes
-			let new_node = new GenNode([SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2], ['n', 's', 'e', 'w']);
+			let x = getRandomInt(SCREEN_WIDTH / 4, SCREEN_WIDTH * 3 / 4)
+			x = x - x % 20;
+			let y = getRandomInt(SCREEN_HEIGHT / 4, SCREEN_HEIGHT * 3 / 4)
+			y = y - y % 20;
+			let new_node = new GenNode([x, y], ['n', 's', 'e', 'w']);
 			objects.push(new Line(node.pos, end, 3));
         	frontier.push(new_node);
 		} else {
@@ -98,24 +102,40 @@ function generate(steps) {
         generate(steps);
 }
 
+function draw(ctx) {
+	ctx.beginPath();
+	for (i = 0; i < objects.length; i++) {
+			objects[i].draw(ctx);
+		}
+		ctx.stroke();
+}
+
+function clear(canvas) {
+	var ctx = canvas.getContext('2d');
+	objects = [];
+	ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
 function gen() {
 	let canvas = document.getElementById('cityBlocks');
 	var ctx = "";
 	if (canvas.getContext) {
 		var ctx = canvas.getContext('2d');
 		ctx.lineWidth = 2;
+		clear(canvas);
 
-		objects = [];
-		ctx.clearRect(0, 0, canvas.width, canvas.height);
-		ctx.beginPath();
+		let steps = $("#stepsField")[0].value;
+		if (steps < 0)
+			steps = 2000
+		generate(steps);
 
-		generate(2000);
 
-		for (i = 0; i < objects.length; i++) {
-			objects[i].draw(ctx);
-		}
-		ctx.stroke();
+		draw(ctx);
 	}
 }
 
-gen();
+function drawZoom() {
+
+}
+
+gen(2000);
