@@ -1,5 +1,6 @@
 SCREEN_WIDTH = 1000;
 SCREEN_HEIGHT = 750;
+blockSize = 10;
 
 class Line {
 	constructor(start, end) {
@@ -40,9 +41,9 @@ let frontier = [];
 let nodes = [];
 let objects = [];
 
-function branchesToLines(node) {
+function branchesToLines(node, maxDist=10) {
 	let ends = [];
-	let distance = getRandomInt(1,10) * 10;
+	let distance = getRandomInt(1,maxDist) * blockSize;
 	if (node.branches.indexOf('n') > -1)
         ends.push([node.pos[0], node.pos[1] - distance]);
     if (node.branches.indexOf('e') > -1)
@@ -59,9 +60,9 @@ function branchesToLines(node) {
 		while (end[1] > SCREEN_HEIGHT) end[1] -= 100;
 		if (getRandomInt(0,4) === 3) { // weights toward center of the screen for picking nodes
 			let x = getRandomInt(SCREEN_WIDTH / 4, SCREEN_WIDTH * 3 / 4)
-			x = x - x % 20;
+			x = x - x % blockSize;
 			let y = getRandomInt(SCREEN_HEIGHT / 4, SCREEN_HEIGHT * 3 / 4)
-			y = y - y % 20;
+			y = y - y % blockSize;
 			let new_node = new GenNode([x, y], ['n', 's', 'e', 'w']);
 			objects.push(new Line(node.pos, end, 3));
         	frontier.push(new_node);
@@ -81,8 +82,8 @@ function pick_branches(node) {
     }
 }
 
-function generate(steps) {
-    let n = new GenNode([SCREEN_WIDTH/2 - (SCREEN_WIDTH/2) % 10, SCREEN_HEIGHT/2 - (SCREEN_HEIGHT/2) % 10], ['n', 's', 'e', 'w'])
+function generate(steps, maxDist) {
+    let n = new GenNode([SCREEN_WIDTH/2 - (SCREEN_WIDTH/2) % blockSize, SCREEN_HEIGHT/2 - (SCREEN_HEIGHT/2) % blockSize], ['n', 's', 'e', 'w'])
     frontier.push(n);
 
     let j = 0
@@ -93,7 +94,7 @@ function generate(steps) {
             n = frontier.unshift();
         if (n instanceof GenNode) {
         	pick_branches(n);
-        	branchesToLines(n);
+        	branchesToLines(n, maxDist);
         	j += 1;
     	}
     }
@@ -126,8 +127,14 @@ function gen() {
 
 		let steps = $("#stepsField")[0].value;
 		if (steps < 0)
-			steps = 2000
-		generate(steps);
+			steps = 1200
+		let maxDist = $("#maxDistanceField")[0].value;
+		if (maxDist < 0)
+			maxDist = 10
+		blockSize = $("#blockSizeField")[0].value;
+		if (blockSize < 0)
+			blockSize = 10
+		generate(steps, maxDist);
 
 
 		draw(ctx);

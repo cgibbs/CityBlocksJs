@@ -33,8 +33,32 @@
       <section id="main_content" class="inner">
         <h3>
 <a id="coffeegen" class="anchor" href="#coffeegen" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>CityBlocksJs</h3>
-    <p>Click the canvas to regenerate the city. Modify the number of steps to change how dense the layout of the city is.</p>
-    <input type="number" id="stepsField" max="10000" value="1500">
+    <p>Click the canvas to regenerate the city. Hover over a variable name to see a brief description of what it does.</p>
+    <table style="border: 0px solid black">
+      <tr>
+        <td>
+          <div class="tooltip">Steps
+            <span class="tooltiptext">The number of steps determines the density of the city layout.</span>
+          </div></td>
+        <td><input type="number" id="stepsField" max="10000" value="1200"> </td>
+      </tr>
+      <tr>
+        <td>
+          <div class="tooltip">Max Distance
+            <span class="tooltiptext">The max distance determines how long individual roads can be. (Try very low numbers!)</span>
+          </div>
+        </td>
+        <td><input type="number" id="maxDistanceField" max="100" value="10"> </td>
+      </tr>
+      <tr>
+        <td>
+          <div class="tooltip">Block Size
+            <span class="tooltiptext">Block size determines how much space is in-between roads for the city blocks.</span>
+          </div>
+        </td>
+        <td><input type="number" id="blockSizeField" max="100" value="10"> </td>
+      </tr>
+    </table>
     <canvas id="cityBlocks" width="1000" height="750" onclick="gen()"></canvas>
     <script src="./cityblocks.js"></script>
     </section>
