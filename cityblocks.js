@@ -54,10 +54,10 @@ function branchesToLines(node, maxDist=10) {
         ends.push([node.pos[0] - distance, node.pos[1]]);
 
     ends.forEach((end) => {
-    	while (end[0] < 0) end[0] += 100;
-    	while (end[0] > SCREEN_WIDTH) end[0] -= 100;
-    	while (end[1] < 0) end[1] += 100;
-		while (end[1] > SCREEN_HEIGHT) end[1] -= 100;
+    	while (end[0] < 0) end[0] += (10 * blockSize);
+    	while (end[0] > SCREEN_WIDTH) end[0] -= (10 * blockSize);
+    	while (end[1] < 0) end[1] += (10 * blockSize);
+		while (end[1] > SCREEN_HEIGHT) end[1] -= (10 * blockSize);
 		if (getRandomInt(0,4) === 3) { // weights toward center of the screen for picking nodes
 			let x = getRandomInt(SCREEN_WIDTH / 4, SCREEN_WIDTH * 3 / 4)
 			x = x - x % blockSize;
